@@ -1,6 +1,18 @@
 import { Chat } from "@/components/Chat";
 import Head from "next/head";
+
 import { useEffect, useRef, useState,useContext } from "react";
+
+import {db} from "@/firebase"
+import{
+  collection,
+  query,
+  doe,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+}from "firebase/firestore"
 
 export default function Home() {
   /*
@@ -21,7 +33,7 @@ export default function Home() {
   const [messages, setMessages] = useState([]);
   // 메시지를 전송 중인지 여부를 저장하는 상태
   const [loading, setLoading] = useState(false);
-
+  const chatCollection = collection(db,"chats");
   const messagesEndRef = useRef(null);
 
   // 메시지 목록을 끝으로 스크롤
@@ -62,6 +74,9 @@ export default function Home() {
     // 응답을 JSON 형태로 변환
     // 비동기 API 를 사용하여 응답을 받기 때문에 await 사용
     const result = await response.json();
+    const docRef = await addDoc(chatCollection,{
+      text: messages
+    });
 
     if (!result) {
       return;
@@ -85,6 +100,7 @@ export default function Home() {
     ]);
   };
 
+
   // 메시지 목록이 업데이트 될 때마다 맨 아래로 스크롤
   useEffect(() => {
     scrollToBottom();
@@ -94,6 +110,8 @@ export default function Home() {
   useEffect(() => {
     handleReset();
   }, []);
+
+
 
   return (
     <>
