@@ -37,7 +37,7 @@ export default async (req, res) => {
     // temperature 값이 높을 수록 AI 의 답변이 다양해짐
     temperature: 0.8,
     // max_tokens 값을 제한함. 이 값을 크게하면 컨텍스트 히스토리에 제약이 커짐.
-    max_tokens: 300,
+    max_tokens: 500,
     /*
       전체 프롬프트를 묶어서 보냄
       system 은 항상 처음에 와야 함
